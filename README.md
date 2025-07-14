@@ -111,7 +111,7 @@ Untuk menjalankan proyek ini, ikuti langkah-langkah berikut:
 Jika Anda ingin berkontribusi pada proyek ini, silakan fork repositori dan ajukan *pull request*.
 ## Thanks to
 
-| [!IZHARDEVELOP](https://github.com/izhardevelop.png?size=100)](https://github.com/izhardevelop) |
+| [![IZHARDEVELOP](https://github.com/izhardevelop.png?size=100)](https://github.com/izhardevelop) |
 
 ## Lisensi
 
