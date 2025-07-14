@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ t.team_page_title }} | Dashboard Kontrol</title>
+    
+    <!-- Impor Font dan Ikon (sama seperti index.html) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="docs-page">
+    <div class="language-switch">
+        <button id="lang-en" class="{% if lang == 'en' %}active{% endif %}" onclick="setLanguage('en')">EN</button>
+        <button id="lang-id" class="{% if lang == 'id' %}active{% endif %}" onclick="setLanguage('id')">ID</button>
+    </div>
+    <header>
+        <h1><i class="fas fa-users"></i>{{ t.team_page_heading }}</h1>
+        <a href="/documentation" style="color: var(--secondary-accent); text-decoration: none; margin-top: 10px; display: inline-block;">{{ t.documentation }}</a>
+    </header>
+
+    <div class="main-container">
+        <div class="card" style="animation-delay: 0.1s;">
+            <h2><i class="fas fa-mosque"></i>{{ t.team_card_1_title }}</h2>
+            <p>{{ t.team_card_1_content }}</p>
+        </div>
+
+        <div class="card" style="animation-delay: 0.2s;">
+            <h2><i class="fas fa-satellite-dish"></i>{{ t.team_card_2_title }}</h2>
+            <p>{{ t.team_card_2_content_p1 }}</p>
+            <ul>
+                <li>{{ t.team_card_2_content_li1 }}</li>
+                <li>{{ t.team_card_2_content_li2 }}</li>
+                <li>{{ t.team_card_2_content_li3 }}</li>
+            </ul>
+            <p>{{ t.team_card_2_content_p2 }}</p>
+        </div>
+
+        <div class="card" style="animation-delay: 0.3s;">
+            <h2><i class="fas fa-graduation-cap"></i>{{ t.team_card_3_title }}</h2>
+            <p>{{ t.team_card_3_content }}</p>
+        </div>
+
+        <a href="/" class="back-button"><i class="fas fa-arrow-left"></i>{{ t.back_to_dashboard }}</a>
+    </div>
+
+    <script>
+        function setLanguage(lang_code) {
+            window.location.href = '/set_language/' + lang_code;
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.card');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>

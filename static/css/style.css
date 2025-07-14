@@ -1,0 +1,554 @@
+/* --- Variabel Warna & Gaya Dasar --- */
+:root {
+    --bg-dark: #1a1c20;
+    --bg-card: #24272c;
+    --bg-input: #2e3238;
+    --primary-accent: #00aaff;
+    --primary-hover: #0088cc;
+    --secondary-accent: #00ffaa;
+    --text-light: #f0f0f0;
+    --text-muted: #a0a0a0;
+    --status-ok: #28a745;
+    --status-warning: #ffc107;
+    --status-error: #dc3545;
+    --border-color: #444;
+    --shadow-color: rgba(0, 0, 0, 0.4);
+}
+
+/* --- Keyframes untuk Animasi --- */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fade-slide-up {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes spin {
+    to { transform: translateY(-50%) rotate(360deg); }
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    transition: background-color 0.5s ease;
+}
+
+/* --- Header --- */
+header {
+    width: 100%;
+    max-width: 1200px;
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 20px;
+    animation: fade-slide-up 0.6s ease-out forwards;
+}
+header h1 {
+    font-size: 2.5em;
+    font-weight: 700;
+    color: var(--primary-accent);
+    margin: 0;
+}
+header p {
+    color: var(--text-muted);
+    margin: 5px 0 0;
+}
+
+/* --- Kontainer Utama --- */
+.main-container {
+    width: 100%;
+    max-width: 1200px;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+.main-container.hidden {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    transform: scale(0.95);
+}
+
+/* --- Gaya Kartu Umum dengan Animasi --- */
+.card {
+    background-color: var(--bg-card);
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 5px 15px var(--shadow-color);
+    border: 1px solid var(--border-color);
+    margin-bottom: 25px; /* Jarak antar kartu */
+    /* Atur keadaan awal untuk animasi scroll */
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.card.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Hapus animasi otomatis lama */
+/* #configSection .card { animation-delay: 0.2s; } ... dst */
+
+
+.card h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: var(--primary-accent);
+    font-size: 1.6em;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px;
+}
+ .card h2 i {
+    margin-right: 12px;
+}
+
+/* --- Bagian Konfigurasi --- */
+#configSection .card-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+}
+.config-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.control-group label {
+    font-weight: 600;
+    color: var(--text-muted);
+    font-size: 0.9em;
+}
+.control-group label i {
+    margin-right: 8px;
+    color: var(--primary-accent);
+}
+.select-wrapper {
+    position: relative;
+}
+.select-wrapper .spinner {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: none;
+    color: var(--primary-accent);
+}
+.select-wrapper.loading .spinner {
+    display: block;
+    animation: spin 1s linear infinite;
+}
+select, input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-input);
+    color: var(--text-light);
+    font-size: 1em;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+select:focus, input:focus {
+    outline: none;
+    border-color: var(--primary-accent);
+    box-shadow: 0 0 0 3px rgba(0, 170, 255, 0.2);
+}
+.config-preview {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+#previewCameraFeed {
+    width: 100%;
+    height: auto;
+    min-height: 250px;
+    aspect-ratio: 4 / 3;
+    border-radius: 8px;
+    background-color: #000;
+    object-fit: cover;
+    border: 1px solid var(--border-color);
+    transition: box-shadow 0.3s ease;
+}
+#previewCameraFeed:hover {
+     box-shadow: 0 0 15px rgba(0, 170, 255, 0.5);
+}
+.config-actions {
+    grid-column: 1 / -1;
+    text-align: center;
+    margin-top: 20px;
+}
+#submitConfigBtn {
+    padding: 14px 40px;
+    font-size: 1.2em;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    background-color: var(--primary-accent);
+    color: var(--bg-dark);
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+#submitConfigBtn:hover {
+    background-color: var(--primary-hover);
+    transform: scale(1.05);
+}
+#submitConfigBtn:active {
+    transform: scale(1);
+}
+#submitConfigBtn i {
+    margin-right: 10px;
+}
+
+/* --- Bagian Operasional (Dashboard) --- */
+#operationalSection {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+    gap: 20px;
+    grid-template-areas:
+        "video video sensors"
+        "video video console";
+}
+#video-card { grid-area: video; }
+#sensor-card { grid-area: sensors; }
+#console-card { grid-area: console; }
+
+#mainVideoFeed {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    background-color: #000;
+}
+#handStatusDisplay {
+    text-align: center;
+    font-size: 1.8em;
+    font-weight: 600;
+    margin-top: 20px;
+    color: var(--secondary-accent);
+    /* Animasi saat status berubah */
+    animation: fadeIn 0.5s;
+}
+
+.sensor-gauges {
+    display: flex;
+    flex-wrap: wrap; /* Allow gauges to wrap on smaller screens */
+    justify-content: space-around;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+.gauge {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.gauge-circle {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: conic-gradient(var(--primary-accent) 0deg, var(--bg-input) 0deg);
+    position: absolute;
+    transition: background 0.5s ease-out; /* Transisi lebih smooth */
+}
+.gauge-center {
+    width: 80px;
+    height: 80px;
+    background: var(--bg-card);
+    border-radius: 50%;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.gauge-value {
+    font-size: 1.5em;
+    font-weight: 700;
+    transition: color 0.3s ease;
+}
+.gauge-label {
+    font-size: 0.8em;
+    color: var(--text-muted);
+}
+.sensor-list .sensor-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+.sensor-list .sensor-item:last-child {
+    border-bottom: none;
+}
+.sensor-item span:first-child {
+    font-weight: 600;
+    color: var(--text-muted);
+}
+.sensor-item span:last-child {
+    font-weight: 600;
+    color: var(--secondary-accent);
+}
+
+#arduinoConsole {
+    height: 200px;
+    overflow-y: auto;
+    background-color: var(--bg-dark);
+    padding: 15px;
+    border-radius: 8px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9em;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    transition: box-shadow 0.3s ease;
+}
+#arduinoConsole:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 170, 255, 0.2);
+}
+#arduinoConsole div {
+    padding: 2px 0;
+    animation: fadeIn 0.3s;
+}
+
+/* --- Notifikasi Toast --- */
+#toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.toast {
+    padding: 15px 20px;
+    border-radius: 8px;
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 3px 10px var(--shadow-color);
+    opacity: 0;
+    transform: translateX(100%);
+    animation: slideIn 0.5s forwards;
+}
+.toast.success { background-color: var(--status-ok); }
+.toast.error { background-color: var(--status-error); }
+.toast.info { background-color: var(--primary-accent); color: var(--bg-dark); }
+@keyframes slideIn {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+@keyframes slideOut {
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+/* --- Status Indicators --- */
+.status-indicator {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--text-muted);
+    margin-left: 10px;
+    transition: background-color 0.5s ease, transform 0.3s ease;
+}
+.status-indicator.connected {
+    background-color: var(--status-ok);
+    transform: scale(1.2);
+}
+.status-indicator.error {
+    background-color: var(--status-error);
+    transform: scale(1.2);
+}
+
+/* --- Gaya Halaman Dokumentasi & Tim --- */
+.docs-page .card p, .docs-page .card li {
+    line-height: 1.8;
+    color: var(--text-muted);
+}
+.docs-page .card ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+.docs-page .card ul li {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 10px;
+    background-color: var(--bg-input);
+    padding: 10px 15px 10px 30px;
+    border-radius: 8px;
+    border-left: 4px solid var(--secondary-accent);
+}
+.docs-page .card ul li::before {
+    content: '\f138'; /* Ikon panah kanan */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    left: 10px;
+    top: 12px;
+    color: var(--secondary-accent);
+}
+.docs-page .card ol {
+    list-style: none;
+    counter-reset: step-counter;
+    padding-left: 0;
+}
+.docs-page .card ol li {
+    counter-increment: step-counter;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: flex-start;
+}
+.docs-page .card ol li::before {
+    content: counter(step-counter);
+    margin-right: 15px;
+    background-color: var(--primary-accent);
+    color: var(--bg-dark);
+    font-weight: 700;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.docs-page code {
+    background-color: var(--bg-dark);
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-family: 'Courier New', Courier, monospace;
+    color: var(--secondary-accent);
+    border: 1px solid var(--border-color);
+}
+
+.back-button {
+    display: inline-block;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    background-color: var(--primary-accent);
+    color: var(--bg-dark);
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 20px;
+}
+.back-button:hover {
+    background-color: var(--primary-hover);
+    transform: scale(1.05);
+}
+.back-button i {
+    margin-right: 10px;
+}
+
+/* --- Media Queries untuk Responsivitas --- */
+@media (max-width: 992px) {
+    #operationalSection {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "video"
+            "sensors"
+            "console";
+    }
+    #configSection .card-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+    header h1 {
+        font-size: 2em;
+    }
+    .card {
+        padding: 20px;
+    }
+    .card h2 {
+        font-size: 1.4em;
+    }
+    .sensor-gauges {
+        flex-direction: column; /* Stack gauges vertically */
+        align-items: center;
+    }
+    .gauge {
+        width: 120px; /* Make gauges slightly larger on small screens */
+        height: 120px;
+    }
+    .gauge-center {
+        width: 90px;
+        height: 90px;
+    }
+    .sensor-list .sensor-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .sensor-item span:last-child {
+        margin-top: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.8em;
+    }
+    .config-actions #submitConfigBtn {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+    .toast {
+        width: 90%;
+        right: 5%;
+        left: 5%;
+        transform: translateX(0%);
+    }
+    @keyframes slideIn {
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    @keyframes slideOut {
+        to {
+            opacity: 0;
+            transform: translateX(0%);
+        }
+    }
+}

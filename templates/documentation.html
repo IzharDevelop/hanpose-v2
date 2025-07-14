@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ t.documentation_page_title }} | Dashboard Kontrol</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Tambahan gaya khusus untuk halaman dokumentasi */
+        .card p, .card li {
+            line-height: 1.8;
+            color: var(--text-muted);
+        }
+        .card ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .card ul li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 10px;
+        }
+        .card ul li::before {
+            content: '\f138'; /* Ikon panah kanan dari Font Awesome */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            top: 2px;
+            color: var(--secondary-accent);
+        }
+        code {
+            background-color: var(--bg-dark);
+            padding: 3px 6px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--secondary-accent);
+        }
+        .back-button {
+            display: inline-block;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            font-weight: 600;
+            border-radius: 8px;
+            border: none;
+            background-color: var(--primary-accent);
+            color: var(--bg-dark);
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 20px;
+        }
+        .back-button:hover {
+            background-color: var(--primary-hover);
+            transform: scale(1.05);
+        }
+        .back-button i {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body class="docs-page">
+    <div class="language-switch">
+        <button id="lang-en" class="{% if lang == 'en' %}active{% endif %}" onclick="setLanguage('en')">EN</button>
+        <button id="lang-id" class="{% if lang == 'id' %}active{% endif %}" onclick="setLanguage('id')">ID</button>
+    </div>
+    <header>
+        <h1><i class="fas fa-book"></i>{{ t.documentation_page_heading }}</h1>
+    </header>
+
+    <div class="main-container">
+        <div class="card" style="animation-delay: 0.1s;">
+            <h2><i class="fas fa-rocket"></i>{{ t.doc_project_goal_title }}</h2>
+            <p>{{ t.doc_project_goal_content | safe }}</p>
+        </div>
+
+        <div class="card" style="animation-delay: 0.2s;">
+            <h2><i class="fas fa-sitemap"></i>{{ t.doc_system_architecture_title }}</h2>
+            <p>{{ t.doc_system_architecture_content_p1 | safe }}</p>
+            <ul>
+                <li>{{ t.doc_system_architecture_content_li1 | safe }}</li>
+                <li>{{ t.doc_system_architecture_content_li2 | safe }}</li>
+                <li>{{ t.doc_system_architecture_content_li3 | safe }}</li>
+            </ul>
+        </div>
+
+        <div class="card" style="animation-delay: 0.3s;">
+            <h2><i class="fas fa-server"></i>{{ t.doc_backend_title }}</h2>
+            <p>{{ t.doc_backend_content_p1 | safe }}</p>
+            <ul>
+                <li>{{ t.doc_backend_content_li1 | safe }}</li>
+                <li>{{ t.doc_backend_content_li2 | safe }}</li>
+                <li>{{ t.doc_backend_content_li3 | safe }}</li>
+                <li>{{ t.doc_backend_content_li4 | safe }}</li>
+                <li>{{ t.doc_backend_content_li5 | safe }}</li>
+            </ul>
+        </div>
+
+        <div class="card" style="animation-delay: 0.4s;">
+            <h2><i class="fas fa-microchip"></i>{{ t.doc_hardware_title }}</h2>
+            <p>{{ t.doc_hardware_content_p1 | safe }}</p>
+            <ul>
+                <li>{{ t.doc_hardware_content_li1 | safe }}</li>
+                <li>{{ t.doc_hardware_content_li2 | safe }}</li>
+                <li>{{ t.doc_hardware_content_li3 | safe }}</li>
+                <li>{{ t.doc_hardware_content_li4 | safe }}</li>
+                <li>{{ t.doc_hardware_content_li5 | safe }}</li>
+                <li>{{ t.doc_hardware_content_li6 | safe }}</li>
+            </ul>
+        </div>
+
+        <div class="card" style="animation-delay: 0.45s;">
+            <h2><i class="fas fa-map-pin"></i>{{ t.doc_pinout_title }}</h2>
+            <p>{{ t.doc_pinout_content_p1 | safe }}</p>
+            <ul>
+                <li>{{ t.doc_pinout_content_li1 | safe }}</li>
+                <li>{{ t.doc_pinout_content_li2 | safe }}</li>
+                <li>{{ t.doc_pinout_content_li3 | safe }}</li>
+                <li>{{ t.doc_pinout_content_li4 | safe }}</li>
+                <li>{{ t.doc_pinout_content_li5 | safe }}</li>
+                <li>{{ t.doc_pinout_content_li6 | safe }}</li>
+                <li>{{ t.doc_pinout_content_li7 | safe }}</li>
+                <li>{{ t.doc_pinout_content_li8 | safe }}</li>
+                <li>{{ t.doc_pinout_content_li9 | safe }}</li>
+                <li>{{ t.doc_pinout_content_li10 | safe }}</li>
+                <li>{{ t.doc_pinout_content_li11 | safe }}</li>
+            </ul>
+        </div>
+
+        <div class="card" style="animation-delay: 0.5s;">
+            <h2><i class="fas fa-desktop"></i>{{ t.doc_frontend_title }}</h2>
+            <p>{{ t.doc_frontend_content_p1 | safe }}</p>
+            <ul>
+                <li>{{ t.doc_frontend_content_li1 | safe }}</li>
+                <li>{{ t.doc_frontend_content_li2 | safe }}</li>
+                <li>{{ t.doc_frontend_content_li3 | safe }}</li>
+            </ul>
+        </div>
+
+        <div class="card" style="animation-delay: 0.6s;">
+            <h2><i class="fas fa-cogs"></i>{{ t.doc_usage_guide_title }}</h2>
+            <p>{{ t.doc_usage_guide_content_p1 | safe }}</p>
+            <ol>
+                <li>{{ t.doc_usage_guide_content_li1_1 | safe }}
+                    <ul>
+                        <li>{{ t.doc_usage_guide_content_li1_1_1 | safe }}</li>
+                        <li>{{ t.doc_usage_guide_content_li1_1_2 | safe }}</li>
+                    </ul>
+                </li>
+                <li>{{ t.doc_usage_guide_content_li2_1 | safe }}
+                    <ul>
+                        <li>{{ t.doc_usage_guide_content_li2_1_1 | safe }}</li>
+                        <li>{{ t.doc_usage_guide_content_li2_1_2 | safe }}</li>
+                        <li>{{ t.doc_usage_guide_content_li2_1_3 | safe }}</li>
+                        <li>{{ t.doc_usage_guide_content_li2_1_4 | safe }}</li>
+                    </ul>
+                </li>
+                <li>{{ t.doc_usage_guide_content_li3_1 | safe }}
+                    <ul>
+                        <li>{{ t.doc_usage_guide_content_li3_1_1 | safe }}</li>
+                        <li>{{ t.doc_usage_guide_content_li3_1_2 | safe }}</li>
+                        <li>{{ t.doc_usage_guide_content_li3_1_3 | safe }}</li>
+                        <li>{{ t.doc_usage_guide_content_li3_1_4 | safe }}</li>
+                        <li>{{ t.doc_usage_guide_content_li3_1_5 | safe }}</li>
+                    </ul>
+                </li>
+                <li>{{ t.doc_usage_guide_content_li4_1 | safe }}
+                    <ul>
+                        <li>{{ t.doc_usage_guide_content_li4_1_1 | safe }}</li>
+                        <li>{{ t.doc_usage_guide_content_li4_1_2 | safe }}</li>
+                        <li>{{ t.doc_usage_guide_content_li4_1_3 | safe }}</li>
+                    </ul>
+                </li>
+                <li>{{ t.doc_usage_guide_content_li5_1 | safe }}
+                    <ul>
+                        <li>{{ t.doc_usage_guide_content_li5_1_1 | safe }}</li>
+                        <li>{{ t.doc_usage_guide_content_li5_1_2 | safe }}</li>
+                        <li>{{ t.doc_usage_guide_content_li5_1_3 | safe }}</li>
+                        <li>{{ t.doc_usage_guide_content_li5_1_4 | safe }}</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <a href="/" class="back-button"><i class="fas fa-arrow-left"></i>{{ t.back_to_dashboard }}</a>
+    </div>
+
+    <script>
+        function setLanguage(lang_code) {
+            window.location.href = '/set_language/' + lang_code;
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.card');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target); // Hentikan pengamatan setelah animasi berjalan
+                    }
+                });
+            }, {
+                threshold: 0.1 // Picu animasi saat 10% elemen terlihat
+            });
+
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>
