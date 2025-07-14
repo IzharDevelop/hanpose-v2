@@ -1,7 +1,3 @@
-# app.py - Versi UI Dua Tahap & Sensor
-# Pastikan pustaka berikut sudah diinstal:
-# pip install opencv-python mediapipe flask flask-socketio pyserial
-
 from flask import Flask, render_template, jsonify, request, Response, session, redirect, url_for
 from flask_socketio import SocketIO, emit
 import cv2
@@ -10,16 +6,16 @@ import serial.tools.list_ports
 import time
 import base64
 import threading
-import json # Untuk memproses data sensor jika JSON
-import webbrowser # Untuk membuka browser secara otomatis
+import json 
+import webbrowser 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your_secret_key_here' # Ganti dengan kunci rahasia yang kuat
+app.config['SECRET_KEY'] = 'your_secret_key_here'
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 # Global variable to store loaded translations
 translations = {}
-AVAILABLE_LANGUAGES = ['en', 'id'] # Define available languages
+AVAILABLE_LANGUAGES = ['en', 'id'] 
 
 def load_translations(lang_code):
     """Loads translations from the specified language file."""
@@ -41,7 +37,7 @@ def load_translations(lang_code):
 
 # --- Variabel Global untuk Mengelola Status Aplikasi ---
 arduino = None
-cap = None # Objek VideoCapture
+cap = None 
 camera_thread = None
 stop_camera_thread_flag = [False]
 # Tambahan: untuk menyimpan data sensor terakhir
@@ -132,14 +128,13 @@ def start_system_handler(data):
 
     try:
         arduino = serial.Serial(selected_port, selected_baud_rate, timeout=1)
-        time.sleep(2) # Beri waktu Arduino untuk reset
+        time.sleep(2) 
         load_translations(session.get('lang', 'en'))
         emit('arduino_status', {'success': True, 'message': f'{translations["connected_to_arduino"]} {selected_port}'})
         print(f"Koneksi serial ke Arduino berhasil di {selected_port}!")
     except serial.SerialException as e:
         emit('arduino_status', {'success': False, 'message': f'{translations["failed_to_connect_arduino"]} {e}'})
         print(f"Gagal terhubung ke Arduino: {e}")
-        # Jangan return di sini, lanjutkan mencoba kamera meskipun Arduino gagal
     
     # --- 2. Inisialisasi Kamera ---
     if camera_thread and camera_thread.is_alive():
@@ -150,14 +145,14 @@ def start_system_handler(data):
     if cap and cap.isOpened():
         cap.release()
         print("Kamera sebelumnya dilepaskan.")
-    cap = None # Pastikan cap None sebelum inisialisasi baru
+    cap = None 
 
     cap = cv2.VideoCapture(selected_camera_id)
     if not cap.isOpened():
         load_translations(session.get('lang', 'en'))
         emit('camera_status', {'success': False, 'message': f'{translations["failed_to_open_camera"]} {selected_camera_id}.'})
         print(f"Gagal membuka kamera ID {selected_camera_id}.")
-        return # Jika kamera gagal, tidak ada gunanya melanjutkan
+        return
 
     # Set resolusi kamera utama untuk deteksi pose
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
@@ -325,7 +320,7 @@ def generate_frames_and_sensors():
             except Exception as e:
                 print(f"Unexpected error processing serial data: {e}")
 
-        socketio.sleep(0.01) # Sedikit ditambah untuk memberi waktu CPU
+        socketio.sleep(0.01)
 
     # --- Pembersihan setelah loop selesai ---
     print(translations.get('loop_stopped', 'Processing loop stopped.'))
